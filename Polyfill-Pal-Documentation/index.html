@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLYFILL-PAL Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .container {
+            max-width: 80rem;
+        }
+        .content {
+            max-width: 65ch;
+        }
+        .sidebar-link {
+            transition: color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+            border-left: 2px solid transparent;
+        }
+        .sidebar-link:hover {
+            color: #58a6ff;
+        }
+        .sidebar-link.active {
+            color: #58a6ff;
+            border-left-color: #58a6ff;
+            font-weight: 600;
+        }
+        pre {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #30363d;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            color: #c9d1d9;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        pre:hover .copy-btn {
+            opacity: 1;
+        }
+        .copy-btn:hover {
+            background: #484f58;
+        }
+        code {
+            background-color: #161b22;
+            border-radius: 0.25rem;
+            padding: 0.1rem 0.3rem;
+            font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+        }
+        /* Custom scrollbar for a polished look */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: #30363d;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="flex flex-col lg:flex-row">
+
+
+    
+    <!-- Sidebar for Navigation -->
+    <aside id="sidebar" class="w-64 min-h-screen bg-gray-900 fixed top-0 left-0 p-6 shadow-xl z-50">
+        <div class="mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                    POLYFILL-PAL
+                </h1>
+                <p class="text-gray-400 text-sm">Documentation</p>
+            </div>
+        </div>
+        <nav>
+            <ul class="space-y-2">
+                <li><a href="#getting-started" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">Getting Started</a></li>
+                <li><a href="#installation" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">Installation</a></li>
+                <li><a href="#configuration" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">Configuration</a></li>
+                <li><a href="#rules" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">Rules</a></li>
+                <li><a href="#code-examples" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">Code Examples</a></li>
+                <li><a href="#about" class="sidebar-link block p-2 rounded-md text-gray-300 hover:text-white transition-colors duration-200">About</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-8 lg:ml-64">
+        <article class="container mx-auto content px-4 lg:px-0">
+            <header class="mb-8 mt-12">
+                <h1 id="getting-started" class="text-4xl font-extrabold text-white">Getting Started</h1>
+                <p class="mt-4 text-gray-300">
+                    <code>eslint-plugin-baseline</code> is an ESLint plugin that helps you write cross-browser compatible JavaScript. It detects the use of web features that do not have "Widely available" baseline support according to the official <strong>web-features</strong> dataset. This guide will walk you through installing the plugin and configuring your project to use it.
+                </p>
+            </header>
+
+            <section id="installation" class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Installation</h2>
+                <p class="text-gray-300 mb-4">
+                    First, ensure you have ESLint installed. Then, add the <code>eslint-plugin-baseline</code> package to your project's <code>devDependencies</code> by running the following command in your terminal:
+                </p>
+                <pre><code class="language-bash">npm install https://github.com/Satya-s89/Polyfill-Pal/raw/main/eslint-plugin-baseline/eslint-plugin-web-baseline-1.0.0.tgz --save-dev</code><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button></pre>
+            </section>
+
+            <section id="configuration" class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Configuration</h2>
+                <p class="text-gray-300 mb-4">
+                    The plugin uses the new ESLint flat configuration format. Create an <code>eslint.config.js</code> file in the root of your project or add the following configuration to your existing file.
+                </p>
+                <h3 class="text-xl font-semibold text-white mb-2">ESLint Flat Configuration (<code>eslint.config.js</code>)</h3>
+                <pre><code class="language-javascript">import baselinePlugin from 'eslint-plugin-baseline';
+import js from '@eslint/js';
+
+export default [
+  js.configs.recommended,
+  {
+    files: ["**/*.js"],
+    plugins: {
+      "baseline": baselinePlugin
+    },
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "module",
+    },
+    rules: {
+      'baseline/no-non-baseline-features': 'error'
+    }
+  }
+];</code><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button></pre>
+                <h3 class="text-xl font-semibold text-white mb-2 mt-6">Legacy Configuration (<code>.eslintrc.js</code>)</h3>
+                <p class="text-gray-300 mb-4">
+                    For projects still using the legacy configuration, you can configure the plugin like this:
+                </p>
+                <pre><code class="language-javascript">module.exports = {
+  plugins: ['baseline'],
+  rules: {
+    'baseline/no-non-baseline-features': 'error'
+  }
+};</code><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button></pre>
+            </section>
+
+            <section id="rules" class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Rules</h2>
+                <h3 class="text-xl font-semibold text-white mb-2"><code>baseline/no-non-baseline-features</code></h3>
+                <p class="text-gray-300">
+                    This rule disallows the use of specific JavaScript methods and features that do not have "Widely available" baseline support. When this rule is triggered, the linter will report an error with a message that includes the current baseline status.
+                </p>
+                <p class="text-gray-300 mt-2">
+                    <strong>How it works:</strong><br>
+                    The plugin analyzes your code for methods that are part of a custom feature map. It then checks the corresponding feature's status in the <code>web-features</code> dataset. If the status is not <code>"high"</code>, it reports an error.
+                </p>
+            </section>
+
+            <section id="code-examples" class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Code Examples</h2>
+                <h3 class="text-xl font-semibold text-white mb-2">✅ Valid Code (Passes Linter)</h3>
+                <pre><code class="language-javascript">// These features have "high" baseline support (widely available)
+const obj = { a: 1, b: 2 };
+const keys = Object.keys(obj);
+
+const str = 'hello';
+const padded = str.padStart(10, '0'); // Widely supported</code><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button></pre>
+                <h3 class="text-xl font-semibold text-white mb-2 mt-6">❌ Invalid Code (Triggers Error)</h3>
+                <pre><code class="language-javascript">// These features have "low" baseline support (limited availability)
+const arr = [3, 1, 2];
+const sorted = arr.toSorted(); // ❌ This will trigger an error
+
+const copy = arr.toReversed(); // ❌ This will trigger an error</code><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button></pre>
+            </section>
+
+            <section id="about" class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">About</h2>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-xl font-semibold text-white mb-4">Project Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+                        <div>
+                            <p class="mb-2"><strong class="text-blue-400">Version:</strong> 1.0.0</p>
+                            <p class="mb-2"><strong class="text-blue-400">Created:</strong> December 2025</p>
+                            <p class="mb-2"><strong class="text-blue-400">Author:</strong> Satya </p>
+                        </div>
+                        <div>
+                            <p class="mb-2"><strong class="text-blue-400">License:</strong> MIT</p>
+                            <p class="mb-2"><strong class="text-blue-400">Repository:</strong> <a href="https://github.com/Satya-s89/Polyfill-Pal" class="text-blue-400 hover:text-blue-300 " target="_blank">GitHub</a></p>
+                            <p class="mb-2"><strong class="text-blue-400">Status:</strong> Active Development</p>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold text-white mb-2">Description</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            POLYFILL-PAL is a comprehensive ESLint plugin designed to help developers write cross-browser compatible JavaScript code. By leveraging the official web-features dataset, it identifies and flags the use of JavaScript methods and APIs that lack widespread browser support, ensuring your code works reliably across different environments.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+        
+        <!-- Footer -->
+        <footer class="mt-16 border-t border-gray-700 pt-8 pb-4">
+            <div class="container mx-auto px-4 lg:px-0">
+                <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                    <p>&copy; 2025 POLYFILL-PAL. Created by Satya.</p>
+                    <p class="mt-2 md:mt-0">Built with ❤️ for better web compatibility</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('section, header');
+
+            // Function to handle active link highlighting on scroll
+            function onScroll() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.href.includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', onScroll);
+            onScroll(); // Set initial active link on page load
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(button) {
+            const pre = button.parentElement;
+            const code = pre.querySelector('code');
+            const text = code.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#238636';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#30363d';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
